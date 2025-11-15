@@ -1,0 +1,93 @@
+/* Import Tailwind v4 via PostCSS plugin */
+@import "tailwindcss";
+
+/* ----- Custom Resets and Layout Baseline ----- */
+/* Helps prevent browser/global styles overriding Tailwind's Preflight */
+html, body, #root, #app {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: inherit;
+  background-color: #fafbfc;
+  /* You can adjust this or set to transparent for dark mode support */
+}
+
+/* ----- Accessible Range Input Styling (Multi-browser) ----- */
+.range-input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  cursor: pointer;
+  border-radius: 4px;
+  outline: none;
+  box-shadow: none;
+}
+
+/* Chrome/Safari/Opera Thumb */
+.range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: #4f46e5;  /* Tailwind indigo-600 */
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  border: none;
+  margin-top: -4px; /* Align thumb on track */
+  transition: background 0.2s;
+}
+
+/* Firefox Thumb */
+.range-input::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: #4f46e5;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  border: none;
+  transition: background 0.2s;
+}
+.range-input::-ms-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: #4f46e5;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  border: none;
+}
+
+/* General Firefox Track */
+.range-input::-moz-range-track {
+  background: #e0e0e0;
+  border-radius: 4px;
+  height: 8px;
+}
+
+/* IE Track */
+.range-input::-ms-fill-lower,
+.range-input::-ms-fill-upper {
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+/* Remove outline on focus for accessibility (optional) */
+.range-input:focus {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+/* Ensure consistent spacing in all browsers */
+.range-input::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 4px;
+  background: #e0e0e0;
+}
+
+/* Hide the default outline in IE */
+@supports (-ms-ime-align: auto) {
+  .range-input {
+    margin: 0;
+  }
+}
