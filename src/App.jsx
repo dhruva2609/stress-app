@@ -1,14 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { Smile, Meh, Frown, Brain, Heart, BookOpen, Users, AlertTriangle, Loader, Server, Zap, BarChart3 } from 'lucide-react';
-// We rely on external CSS file App.css for the base layout and slider styling.
 
 // --- 1. CONFIGURATION AND INITIAL STATE ---
 
-// Define the structure for all input groups and their fields (13 features)
+// Define the structure for all input groups and their fields
+// NOTE: This list of IDs MUST be consistent across React and Python.
 const INPUT_CONFIG = {
   psychological: {
     title: "Psychological Well-being",
-    icon: <Brain className="w-6 h-6 text-indigo-600" />,
+    icon: <Brain className="w-6 h-6 text-orange-500" />,
     fields: [
       { id: 'anxiety_level', name: 'Anxiety Level', range: [1, 21], type: 'number', negativeFactor: true },
       { id: 'self_esteem', name: 'Self Esteem', range: [1, 30], type: 'number', negativeFactor: false }, // Higher is better
@@ -18,7 +18,7 @@ const INPUT_CONFIG = {
   },
   physiological: {
     title: "Physiological Indicators",
-    icon: <Heart className="w-6 h-6 text-pink-600" />,
+    icon: <Heart className="w-6 h-6 text-red-500" />,
     fields: [
       { id: 'sleep_quality', name: 'Sleep Quality (0=Poor, 5=Excellent)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: false }, // Good factor
       { id: 'headache', name: 'Headache Frequency (0=Never, 5=Daily)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
@@ -27,17 +27,17 @@ const INPUT_CONFIG = {
   },
   academic: {
     title: "Academic & Environmental Factors",
-    icon: <BookOpen className="w-6 h-6 text-teal-600" />,
+    icon: <BookOpen className="w-6 h-6 text-teal-500" />,
     fields: [
       { id: 'academic_performance', name: 'Academic Performance (0=Poor, 5=Excellent)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: false }, // Good factor
       { id: 'study_load', name: 'Study Load (0=Low, 5=Very High)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
       { id: 'future_career_concerns', name: 'Future Career Concerns (0-5)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
       { id: 'noise_level', name: 'Noise Level (1=Quiet, 5=Loud)', range: [1, 5], type: 'select', options: Array.from({ length: 5 }, (_, i) => ({ label: `${i + 1}`, value: i + 1 })), negativeFactor: true },
-    ], 
+    ],
   },
   social: {
     title: "Social Dynamics",
-    icon: <Users className="w-6 h-6 text-blue-600" />,
+    icon: <Users className="w-6 h-6 text-purple-500" />,
     fields: [
       { id: 'peer_pressure', name: 'Peer Pressure (0=None, 5=High)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
       { id: 'bullying', name: 'Bullying Frequency (0=None, 5=High)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
@@ -74,19 +74,19 @@ const getResultStyle = (levelIndex) => {
         color = 'bg-red-600';
         icon = <Frown className="w-8 h-8" />;
         description = "The model predicts a significantly HIGH stress level. Intervention and self-care are highly recommended.";
-        badgeColor = 'bg-red-600 text-white shadow-lg shadow-red-500/50';
+        badgeColor = 'bg-red-200 text-red-800';
     } else if (levelIndex === 1) {
         level = 'Moderate Stress (Level 1)';
-        color = 'bg-yellow-500';
+        color = 'bg-orange-500';
         icon = <Meh className="w-8 h-8" />;
         description = "The model predicts a MODERATE stress level. Attention is needed to prevent escalation.";
-        badgeColor = 'bg-yellow-500 text-black shadow-lg shadow-yellow-500/50';
+        badgeColor = 'bg-orange-200 text-orange-800';
     } else { // levelIndex === 0
         level = 'Low Stress (Level 0)';
-        color = 'bg-green-600';
+        color = 'bg-teal-600';
         icon = <Smile className="w-8 h-8" />;
         description = "The model predicts a LOW stress level. Continue practicing healthy habits.";
-        badgeColor = 'bg-green-600 text-white shadow-lg shadow-green-500/50';
+        badgeColor = 'bg-teal-200 text-teal-800';
     }
 
     return { level, color, icon, description, badgeColor };
@@ -110,7 +110,7 @@ const InputField = ({ id, name, value, onChange, range, type, options }) => {
                 id={id}
                 value={value}
                 onChange={(e) => onChange(id, parseFloat(e.target.value))}
-                className="w-full p-2 border border-gray-300 bg-white text-gray-800 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 shadow-sm appearance-none cursor-pointer"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm appearance-none cursor-pointer bg-white text-gray-700"
             >
                 {options.map(option => (
                     <option key={option.value} value={option.value}>
@@ -129,25 +129,27 @@ const InputField = ({ id, name, value, onChange, range, type, options }) => {
                 step="0.01" 
                 value={value}
                 onChange={(e) => onChange(id, parseFloat(e.target.value))}
-                // Apply custom CSS class for cross-browser consistency
-                className="range-input"
+                // Modernized slider styling with blue accent
+                className="w-full h-2 bg-blue-100 rounded-full appearance-none cursor-pointer transition-all
+                             [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-600 [&::-webkit-slider-thumb]:shadow-lg
+                             [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-blue-600 [&::-moz-range-thumb]:shadow-lg"
             />
         );
     }
 
     return (
-        <div className="mb-4 p-4 bg-white rounded-xl shadow-lg border border-gray-200">
+        <div className="mb-4 p-4 bg-gray-50 rounded-lg shadow-inner transition-all hover:bg-white border border-gray-100">
             <label htmlFor={id} className="block text-sm font-semibold text-gray-800 mb-2 flex justify-between items-center">
                 {name}
-                <span className="text-sm font-bold text-white bg-indigo-600 px-3 py-0.5 rounded-full shadow-md">{displayedValue}</span>
+                <span className="text-sm font-bold text-white bg-blue-600 px-3 py-0.5 rounded-full shadow-md">{displayedValue}</span>
             </label>
             {inputElement}
-            <p className="mt-1 text-xs text-gray-500">Range: {min} to {max}</p>
+            <p className="mt-1 text-xs text-gray-400">Range: {min} to {max}</p>
         </div>
     );
 };
 
-// Input Visualization Component (Bar Chart)
+// Input Visualization Component (Bar Chart) - FINAL FIX FOR DISPLAY INVERSION
 const InputVisualization = ({ inputs }) => {
     // Collect all fields and normalize their input values to a 0-100 scale for charting
     const chartData = Object.values(INPUT_CONFIG).flatMap(group => 
@@ -158,9 +160,9 @@ const InputVisualization = ({ inputs }) => {
             // 1. Calculate normalized value (0 to 1)
             let normalized = (value - min) / (max - min);
 
-            // 2. INVERT SCALE FOR VISUAL IMPACT (Correctly)
+            // 2. CRITICAL FIX: INVERT SCALE FOR VISUAL IMPACT
+            // If it's a positive factor (e.g., Self Esteem), high value means LOW stress impact, so we invert.
             if (!field.negativeFactor) {
-                // If the user selects a high score (good thing), the normalized stress IMPACT is low.
                 normalized = 1 - normalized;
             }
 
@@ -168,7 +170,7 @@ const InputVisualization = ({ inputs }) => {
             const barHeight = Math.max(5, normalized * 100); 
             
             // Determine color based on normalized STRESS impact (higher is redder)
-            const barColor = normalized > 0.7 ? 'bg-red-600' : normalized > 0.4 ? 'bg-yellow-500' : 'bg-green-600';
+            const barColor = normalized > 0.7 ? 'bg-red-600' : normalized > 0.4 ? 'bg-orange-500' : 'bg-teal-600';
 
             return {
                 name: field.name.split('(')[0].trim(), // Use short name for chart
@@ -179,19 +181,19 @@ const InputVisualization = ({ inputs }) => {
     );
 
     return (
-        <div className="mt-12 bg-white p-6 rounded-2xl shadow-2xl border-t-8 border-indigo-500/50">
-            <h2 className="text-2xl font-extrabold text-gray-800 mb-6 flex items-center">
-                <BarChart3 className="w-6 h-6 mr-3 text-indigo-600" />
+        <div className="mt-12 bg-white p-6 rounded-2xl shadow-2xl border-t-8 border-blue-500/50">
+            <h2 className="text-2xl font-extrabold text-gray-900 mb-6 flex items-center">
+                <BarChart3 className="w-6 h-6 mr-3 text-blue-600" />
                 Current Stress Factor Impact
             </h2>
             <p className="text-sm text-gray-600 mb-6">Visualizing the relative impact of factors (higher bar = **higher simulated stress impact**).</p>
             
-            <div className="flex overflow-x-auto pb-4 space-x-4">
+            <div className="flex overflow-x-auto pb-4 space-x-2 sm:space-x-4">
                 {chartData.map((item, index) => (
-                    <div key={index} className="flex flex-col items-center flex-shrink-0 w-20">
-                        <div className="relative w-full h-48 bg-gray-200 rounded-lg flex items-end overflow-hidden shadow-inner">
+                    <div key={index} className="flex flex-col items-center flex-shrink-0 w-16">
+                        <div className="relative w-full h-40 bg-gray-100 rounded-lg flex items-end overflow-hidden">
                             <div
-                                className={`w-full ${item.color} rounded-lg transition-all duration-500 ease-out shadow-lg`}
+                                className={`w-full ${item.color} rounded-lg transition-all duration-500 ease-out`}
                                 style={{ height: `${item.height}%` }}
                                 title={`${item.name}: ${item.height.toFixed(0)}% impact`}
                             ></div>
@@ -210,15 +212,15 @@ const InputVisualization = ({ inputs }) => {
 // Result Box component 
 const ResultBox = ({ apiResult, isLoading, apiError }) => {
     
-    const baseClasses = "mt-10 p-6 rounded-3xl transition-all duration-500 border-4 border-gray-300 shadow-2xl";
+    const baseClasses = "mt-10 p-6 rounded-3xl shadow-2xl transition-all duration-500 border-b-8 border-t-8";
 
     // Initial state before any prediction
     if (!apiResult && !isLoading && !apiError) {
         return (
-            <div className={`${baseClasses} bg-white shadow-xl shadow-gray-300/50`}>
+            <div className={`${baseClasses} border-gray-300 bg-white`}>
                 <div className="flex items-center justify-center text-gray-500 h-24">
-                    <Zap className="w-8 h-8 mr-4 animate-bounce text-indigo-500" />
-                    <p className="text-xl font-medium text-gray-500">Ready to analyze R model prediction.</p>
+                    <Zap className="w-8 h-8 mr-4 animate-bounce text-blue-500" />
+                    <p className="text-xl font-medium">Ready to predict stress level.</p>
                 </div>
             </div>
         );
@@ -227,10 +229,10 @@ const ResultBox = ({ apiResult, isLoading, apiError }) => {
     // Loading State
     if (isLoading) {
         return (
-            <div className={`${baseClasses} bg-white border-indigo-400 shadow-indigo-500/30 animate-pulse`}>
-                <div className="flex items-center justify-center text-indigo-600 h-24">
+            <div className={`${baseClasses} border-blue-400 bg-blue-50 animate-pulse`}>
+                <div className="flex items-center justify-center text-blue-700 h-24">
                     <Loader className="w-8 h-8 mr-4 animate-spin" />
-                    <p className="text-xl font-medium">Analyzing inputs with R ML model...</p>
+                    <p className="text-xl font-medium">Analyzing inputs with ML model...</p>
                 </div>
             </div>
         );
@@ -239,43 +241,41 @@ const ResultBox = ({ apiResult, isLoading, apiError }) => {
     // Error State
     if (apiError) {
         return (
-            <div className={`${baseClasses} border-red-500 bg-red-100 shadow-red-500/30`}>
+            <div className={`${baseClasses} border-red-500 bg-red-100`}>
                 <div className="flex items-center justify-between mb-2">
                     <h2 className="text-xl font-semibold text-red-700 flex items-center">
                         <AlertTriangle className="w-6 h-6 mr-2" /> API Connection Error
                     </h2>
                 </div>
                 <p className="text-sm text-red-800 font-mono break-words">{apiError}</p>
-                <p className="text-xs mt-2 text-red-600 font-semibold">Ensure the R Plumber server is running and accessible on port 5000.</p>
+                <p className="text-xs mt-2 text-red-600 font-semibold">Ensure the Flask server is running and accessible.</p>
             </div>
         );
     }
 
     // Success State
     if (apiResult) {
-        // CRITICAL FIX: R Plumber returns factors as strings, so 'predicted_level' is a string "0", "1", or "2".
-        const predicted_level_int = parseInt(apiResult.predicted_stress_level, 10);
+        const { level, color, icon, description, badgeColor } = getResultStyle(apiResult.predicted_stress_level);
         
-        const { level, color, icon, description, badgeColor } = getResultStyle(predicted_level_int);
-        
+        // Use the style mapping but display the description/level from the API if provided
         const finalDescription = apiResult.level_description || description;
         
         return (
-            <div className={`${baseClasses} ${color.replace('bg-', 'border-')} bg-white shadow-lg shadow-gray-300/50`}>
+            <div className={`${baseClasses} ${color.replace('bg-', 'border-')} bg-white`}>
                 <div className="flex items-start justify-between">
                     {/* Icon and Main Text */}
                     <div className="flex items-center flex-grow">
-                        <div className={`p-4 rounded-full ${color} text-white mr-4 shadow-xl flex-shrink-0`}>
+                        <div className={`p-4 rounded-full ${color} text-white mr-4 shadow-lg flex-shrink-0`}>
                             {icon}
                         </div>
                         <div>
-                            <h3 className="text-3xl font-extrabold text-gray-800 mb-1">{level}</h3>
+                            <h3 className="text-3xl font-extrabold text-gray-900 mb-1">{level}</h3>
                             <p className="text-base text-gray-600">{finalDescription}</p>
                         </div>
                     </div>
                     {/* Level Badge */}
-                    <div className={`text-xl font-bold px-4 py-1.5 rounded-full self-start ${badgeColor}`}>
-                        LEVEL {predicted_level_int}
+                    <div className={`text-xl font-bold px-4 py-1.5 rounded-full shadow-lg self-start ${badgeColor}`}>
+                        LEVEL {apiResult.predicted_stress_level}
                     </div>
                 </div>
             </div>
@@ -303,15 +303,16 @@ const App = () => {
         setApiResult(null);
         setApiError(null);
         
-        // 1. Construct the payload in the correct order/structure expected by Plumber
+        // 1. Construct the payload in the correct order/structure expected by Flask
+        // NOTE: The inversion happens on the server, we just send the raw values here.
         const payload = FEATURE_IDS_ORDERED.reduce((acc, key) => {
             acc[key] = parseFloat(inputs[key] || 0); // Ensure value is a float
             return acc;
         }, {});
         
         try {
-            // 2. Send POST request to R Plumber endpoint
-            const response = await fetch('http://127.0.0.1:5000/predict', { 
+            // 2. Send POST request to Flask endpoint
+            const response = await fetch('http://127.0.0.1:5000/predict', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -321,6 +322,7 @@ const App = () => {
 
             const data = await response.json();
 
+            // 3. Handle response
             if (response.ok) {
                 setApiResult(data);
             } else {
@@ -328,7 +330,7 @@ const App = () => {
             }
         } catch (err) {
             console.error("Fetch error:", err);
-            setApiError("Could not connect to the API server. Please ensure the R Plumber server is running.");
+            setApiError("Could not connect to the API server. Please ensure 'api_server.py' is running.");
         } finally {
             setIsLoading(false);
         }
@@ -338,11 +340,11 @@ const App = () => {
     return (
         <div className="min-h-screen bg-gray-100 p-4 sm:p-8 font-sans">
             <header className="text-center mb-10 pt-4">
-                <h1 className="text-5xl font-extrabold text-indigo-700 tracking-tight">
-                    STUDENT STRESS PREDICTOR
+                <h1 className="text-5xl font-extrabold text-blue-700 tracking-tight">
+                    Student Stress Predictor
                 </h1>
                 <p className="text-gray-600 mt-2 text-xl">
-                    Adjust the factors below and click "Get Prediction" to analyze via the R ML model.
+                    Adjust the factors below and click "Get Prediction" to analyze via the Python ML model.
                 </p>
             </header>
 
@@ -359,8 +361,8 @@ const App = () => {
                     <button
                         onClick={handleApiPrediction}
                         disabled={isLoading}
-                        className="px-12 py-4 text-xl font-bold rounded-full shadow-2xl shadow-indigo-400/50 
-                                   bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:from-indigo-700 hover:to-blue-700 transition-all transform hover:scale-[1.03] 
+                        className="px-12 py-4 text-xl font-bold rounded-full shadow-2xl shadow-blue-400/50 
+                                   bg-blue-600 text-white hover:bg-blue-700 transition-all transform hover:scale-105 
                                    disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed flex items-center justify-center mx-auto"
                     >
                         {isLoading ? (
@@ -373,14 +375,15 @@ const App = () => {
                 </div>
                 
                 {/* Graph/Visualization Section */}
+                {/* The graph should now correctly reflect that high self-esteem means LOW stress impact */}
                 <InputVisualization inputs={inputs} />
 
 
                 {/* Input Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
                     {Object.entries(INPUT_CONFIG).map(([key, group]) => (
-                        <div key={key} className="bg-white p-6 rounded-2xl shadow-xl border border-gray-200/80">
-                            <h2 className="text-xl font-extrabold text-gray-800 mb-6 flex items-center">
+                        <div key={key} className="bg-white p-6 rounded-2xl shadow-2xl border-t-8 border-blue-500/50 hover:shadow-blue-300 transition-shadow">
+                            <h2 className="text-xl font-extrabold text-gray-900 mb-6 flex items-center">
                                 {group.icon}
                                 <span className="ml-3">{group.title}</span>
                             </h2>
@@ -399,8 +402,9 @@ const App = () => {
                 </div>
             </div>
 
-            <footer className="text-center mt-12 text-sm text-gray-500">
-                <p>Prediction powered by Random Forest Classifier model running on an R Plumber server.</p>
+            <footer className="text-center mt-12 text-sm text-gray-400">
+                <p>Prediction powered by Random Forest Classifier model running on a Flask server.</p>
+                <p>Designed with React, Tailwind CSS, and Lucide Icons.</p>
             </footer>
         </div>
     );
