@@ -4,9 +4,16 @@ from flask_cors import CORS
 import numpy as np
 import pandas as pd 
 
+import os
+
 # --- CONFIGURATION ---
 MODEL_FILENAME = 'final_stress_predictor_rf.joblib'
 SCALER_FILENAME = 'scaler.joblib'
+
+# Use absolute paths for Vercel environment
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, MODEL_FILENAME)
+SCALER_PATH = os.path.join(BASE_DIR, SCALER_FILENAME)
 
 # >>> CRITICAL FIX: FEATURE ORDER LIST (13 Features) <<<
 # This list MUST match the 13 columns in your training script and React frontend.
@@ -34,10 +41,10 @@ CORS(app)
 
 # Load the trained model and scaler objects
 try:
-    model = joblib.load(MODEL_FILENAME)
-    scaler = joblib.load(SCALER_FILENAME)
-    print(f"Loaded Model: {MODEL_FILENAME}")
-    print(f"Loaded Scaler: {SCALER_FILENAME}")
+    model = joblib.load(MODEL_PATH)
+    scaler = joblib.load(SCALER_PATH)
+    print(f"Loaded Model: {MODEL_PATH}")
+    print(f"Loaded Scaler: {SCALER_PATH}")
 except FileNotFoundError:
     print("ERROR: Model or Scaler files not found. Run the Python ML script first!")
     exit()

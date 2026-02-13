@@ -6,62 +6,62 @@ import { Smile, Meh, Frown, Brain, Heart, BookOpen, Users, AlertTriangle, Loader
 // Define the structure for all input groups and their fields
 // NOTE: This list of IDs MUST be consistent across React and Python.
 const INPUT_CONFIG = {
-  psychological: {
-    title: "Psychological Well-being",
-    icon: <Brain className="w-6 h-6 text-orange-500" />,
-    fields: [
-      { id: 'anxiety_level', name: 'Anxiety Level', range: [1, 21], type: 'number', negativeFactor: true },
-      { id: 'self_esteem', name: 'Self Esteem', range: [1, 30], type: 'number', negativeFactor: false }, // Higher is better
-      { id: 'depression', name: 'Depression Score', range: [0, 27], type: 'number', negativeFactor: true },
-      { id: 'mental_health_history', name: 'Mental Health History', range: [0, 1], type: 'select', options: [{ label: 'No History (0)', value: 0 }, { label: 'Has History (1)', value: 1 }], negativeFactor: true },
-    ],
-  },
-  physiological: {
-    title: "Physiological Indicators",
-    icon: <Heart className="w-6 h-6 text-red-500" />,
-    fields: [
-      { id: 'sleep_quality', name: 'Sleep Quality (0=Poor, 5=Excellent)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: false }, // Good factor
-      { id: 'headache', name: 'Headache Frequency (0=Never, 5=Daily)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
-      { id: 'breathing_problem', name: 'Breathing Problem Severity (0-5)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
-    ],
-  },
-  academic: {
-    title: "Academic & Environmental Factors",
-    icon: <BookOpen className="w-6 h-6 text-teal-500" />,
-    fields: [
-      { id: 'academic_performance', name: 'Academic Performance (0=Poor, 5=Excellent)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: false }, // Good factor
-      { id: 'study_load', name: 'Study Load (0=Low, 5=Very High)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
-      { id: 'future_career_concerns', name: 'Future Career Concerns (0-5)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
-      { id: 'noise_level', name: 'Noise Level (1=Quiet, 5=Loud)', range: [1, 5], type: 'select', options: Array.from({ length: 5 }, (_, i) => ({ label: `${i + 1}`, value: i + 1 })), negativeFactor: true },
-    ],
-  },
-  social: {
-    title: "Social Dynamics",
-    icon: <Users className="w-6 h-6 text-purple-500" />,
-    fields: [
-      { id: 'peer_pressure', name: 'Peer Pressure (0=None, 5=High)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
-      { id: 'bullying', name: 'Bullying Frequency (0=None, 5=High)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
-      { id: 'social_support', name: 'Social Support (0=None, 3=High)', range: [0, 3], type: 'select', options: Array.from({ length: 4 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: false }, // Good factor
-    ],
-  },
+    psychological: {
+        title: "Psychological Well-being",
+        icon: <Brain className="w-6 h-6 text-orange-500" />,
+        fields: [
+            { id: 'anxiety_level', name: 'Anxiety Level', range: [1, 21], type: 'number', negativeFactor: true },
+            { id: 'self_esteem', name: 'Self Esteem', range: [1, 30], type: 'number', negativeFactor: false }, // Higher is better
+            { id: 'depression', name: 'Depression Score', range: [0, 27], type: 'number', negativeFactor: true },
+            { id: 'mental_health_history', name: 'Mental Health History', range: [0, 1], type: 'select', options: [{ label: 'No History (0)', value: 0 }, { label: 'Has History (1)', value: 1 }], negativeFactor: true },
+        ],
+    },
+    physiological: {
+        title: "Physiological Indicators",
+        icon: <Heart className="w-6 h-6 text-red-500" />,
+        fields: [
+            { id: 'sleep_quality', name: 'Sleep Quality (0=Poor, 5=Excellent)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: false }, // Good factor
+            { id: 'headache', name: 'Headache Frequency (0=Never, 5=Daily)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
+            { id: 'breathing_problem', name: 'Breathing Problem Severity (0-5)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
+        ],
+    },
+    academic: {
+        title: "Academic & Environmental Factors",
+        icon: <BookOpen className="w-6 h-6 text-teal-500" />,
+        fields: [
+            { id: 'academic_performance', name: 'Academic Performance (0=Poor, 5=Excellent)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: false }, // Good factor
+            { id: 'study_load', name: 'Study Load (0=Low, 5=Very High)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
+            { id: 'future_career_concerns', name: 'Future Career Concerns (0-5)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
+            { id: 'noise_level', name: 'Noise Level (1=Quiet, 5=Loud)', range: [1, 5], type: 'select', options: Array.from({ length: 5 }, (_, i) => ({ label: `${i + 1}`, value: i + 1 })), negativeFactor: true },
+        ],
+    },
+    social: {
+        title: "Social Dynamics",
+        icon: <Users className="w-6 h-6 text-purple-500" />,
+        fields: [
+            { id: 'peer_pressure', name: 'Peer Pressure (0=None, 5=High)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
+            { id: 'bullying', name: 'Bullying Frequency (0=None, 5=High)', range: [0, 5], type: 'select', options: Array.from({ length: 6 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: true },
+            { id: 'social_support', name: 'Social Support (0=None, 3=High)', range: [0, 3], type: 'select', options: Array.from({ length: 4 }, (_, i) => ({ label: `${i}`, value: i })), negativeFactor: false }, // Good factor
+        ],
+    },
 };
 
 // Create a flat initial state object
 const getInitialState = () => {
-  const state = {};
-  Object.values(INPUT_CONFIG).forEach(group => {
-    group.fields.forEach(field => {
-      // Set initial value to the lowest end of the range
-      state[field.id] = field.type === 'number' ? field.range[0] : field.options[0].value;
+    const state = {};
+    Object.values(INPUT_CONFIG).forEach(group => {
+        group.fields.forEach(field => {
+            // Set initial value to the lowest end of the range
+            state[field.id] = field.type === 'number' ? field.range[0] : field.options[0].value;
+        });
     });
-  });
-  return state;
+    return state;
 };
 
 // Helper to collect all feature IDs in the defined order (13 features)
 const FEATURE_IDS_ORDERED = Object.values(INPUT_CONFIG)
-  .flatMap(group => group.fields)
-  .map(field => field.id);
+    .flatMap(group => group.fields)
+    .map(field => field.id);
 
 // --- 2. API INTERACTION LOGIC ---
 
@@ -126,7 +126,7 @@ const InputField = ({ id, name, value, onChange, range, type, options }) => {
                 type="range"
                 min={min}
                 max={max}
-                step="0.01" 
+                step="0.01"
                 value={value}
                 onChange={(e) => onChange(id, parseFloat(e.target.value))}
                 // Modernized slider styling with blue accent
@@ -152,11 +152,11 @@ const InputField = ({ id, name, value, onChange, range, type, options }) => {
 // Input Visualization Component (Bar Chart) - FINAL FIX FOR DISPLAY INVERSION
 const InputVisualization = ({ inputs }) => {
     // Collect all fields and normalize their input values to a 0-100 scale for charting
-    const chartData = Object.values(INPUT_CONFIG).flatMap(group => 
+    const chartData = Object.values(INPUT_CONFIG).flatMap(group =>
         group.fields.map(field => {
             const value = inputs[field.id];
             const [min, max] = field.range;
-            
+
             // 1. Calculate normalized value (0 to 1)
             let normalized = (value - min) / (max - min);
 
@@ -167,8 +167,8 @@ const InputVisualization = ({ inputs }) => {
             }
 
             // Calculate bar height (minimum 5% to avoid vanishing bars)
-            const barHeight = Math.max(5, normalized * 100); 
-            
+            const barHeight = Math.max(5, normalized * 100);
+
             // Determine color based on normalized STRESS impact (higher is redder)
             const barColor = normalized > 0.7 ? 'bg-red-600' : normalized > 0.4 ? 'bg-orange-500' : 'bg-teal-600';
 
@@ -187,7 +187,7 @@ const InputVisualization = ({ inputs }) => {
                 Current Stress Factor Impact
             </h2>
             <p className="text-sm text-gray-600 mb-6">Visualizing the relative impact of factors (higher bar = **higher simulated stress impact**).</p>
-            
+
             <div className="flex overflow-x-auto pb-4 space-x-2 sm:space-x-4">
                 {chartData.map((item, index) => (
                     <div key={index} className="flex flex-col items-center flex-shrink-0 w-16">
@@ -211,7 +211,7 @@ const InputVisualization = ({ inputs }) => {
 
 // Result Box component 
 const ResultBox = ({ apiResult, isLoading, apiError }) => {
-    
+
     const baseClasses = "mt-10 p-6 rounded-3xl shadow-2xl transition-all duration-500 border-b-8 border-t-8";
 
     // Initial state before any prediction
@@ -225,7 +225,7 @@ const ResultBox = ({ apiResult, isLoading, apiError }) => {
             </div>
         );
     }
-    
+
     // Loading State
     if (isLoading) {
         return (
@@ -256,10 +256,10 @@ const ResultBox = ({ apiResult, isLoading, apiError }) => {
     // Success State
     if (apiResult) {
         const { level, color, icon, description, badgeColor } = getResultStyle(apiResult.predicted_stress_level);
-        
+
         // Use the style mapping but display the description/level from the API if provided
         const finalDescription = apiResult.level_description || description;
-        
+
         return (
             <div className={`${baseClasses} ${color.replace('bg-', 'border-')} bg-white`}>
                 <div className="flex items-start justify-between">
@@ -281,7 +281,7 @@ const ResultBox = ({ apiResult, isLoading, apiError }) => {
             </div>
         );
     }
-    
+
     return null;
 };
 
@@ -302,17 +302,17 @@ const App = () => {
         setIsLoading(true);
         setApiResult(null);
         setApiError(null);
-        
+
         // 1. Construct the payload in the correct order/structure expected by Flask
         // NOTE: The inversion happens on the server, we just send the raw values here.
         const payload = FEATURE_IDS_ORDERED.reduce((acc, key) => {
             acc[key] = parseFloat(inputs[key] || 0); // Ensure value is a float
             return acc;
         }, {});
-        
+
         try {
             // 2. Send POST request to Flask endpoint
-            const response = await fetch('http://127.0.0.1:5000/predict', {
+            const response = await fetch('/api/predict', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -350,12 +350,12 @@ const App = () => {
 
             <div className="max-w-7xl mx-auto">
                 {/* Result Section */}
-                <ResultBox 
+                <ResultBox
                     apiResult={apiResult}
                     isLoading={isLoading}
                     apiError={apiError}
                 />
-                
+
                 {/* Prediction Button */}
                 <div className="mt-8 mb-12 text-center">
                     <button
@@ -373,7 +373,7 @@ const App = () => {
                         {isLoading ? 'ANALYZING...' : 'GET PREDICTION FROM SERVER'}
                     </button>
                 </div>
-                
+
                 {/* Graph/Visualization Section */}
                 {/* The graph should now correctly reflect that high self-esteem means LOW stress impact */}
                 <InputVisualization inputs={inputs} />
