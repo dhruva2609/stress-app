@@ -141,7 +141,7 @@ const InputField = ({ id, name, value, onChange, range, type, options }) => {
         <div className="mb-4 p-4 bg-gray-50 rounded-lg shadow-inner transition-all hover:bg-white border border-gray-100">
             <label htmlFor={id} className="block text-sm font-semibold text-gray-800 mb-2 flex justify-between items-center">
                 {name}
-                <span className="text-sm font-bold text-white bg-blue-600 px-3 py-0.5 rounded-full shadow-md">{displayedValue}</span>
+                <span className="text-xs sm:text-sm font-bold text-white bg-blue-600 px-2 sm:px-3 py-0.5 rounded-full shadow-md">{displayedValue}</span>
             </label>
             {inputElement}
             <p className="mt-1 text-xs text-gray-400">Range: {min} to {max}</p>
@@ -182,7 +182,7 @@ const InputVisualization = ({ inputs }) => {
 
     return (
         <div className="mt-12 bg-white p-6 rounded-2xl shadow-2xl border-t-8 border-blue-500/50">
-            <h2 className="text-2xl font-extrabold text-gray-900 mb-6 flex items-center">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 mb-6 flex items-center">
                 <BarChart3 className="w-6 h-6 mr-3 text-blue-600" />
                 Current Stress Factor Impact
             </h2>
@@ -262,19 +262,19 @@ const ResultBox = ({ apiResult, isLoading, apiError }) => {
 
         return (
             <div className={`${baseClasses} ${color.replace('bg-', 'border-')} bg-white`}>
-                <div className="flex items-start justify-between">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
                     {/* Icon and Main Text */}
-                    <div className="flex items-center flex-grow">
-                        <div className={`p-4 rounded-full ${color} text-white mr-4 shadow-lg flex-shrink-0`}>
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start flex-grow text-center sm:text-left">
+                        <div className={`p-4 rounded-full ${color} text-white mr-0 sm:mr-4 mb-4 sm:mb-0 shadow-lg flex-shrink-0`}>
                             {icon}
                         </div>
                         <div>
-                            <h3 className="text-3xl font-extrabold text-gray-900 mb-1">{level}</h3>
-                            <p className="text-base text-gray-600">{finalDescription}</p>
+                            <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-2">{level}</h3>
+                            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{finalDescription}</p>
                         </div>
                     </div>
                     {/* Level Badge */}
-                    <div className={`text-xl font-bold px-4 py-1.5 rounded-full shadow-lg self-start ${badgeColor}`}>
+                    <div className={`text-lg sm:text-xl font-bold px-3 py-1 sm:px-4 sm:py-1.5 rounded-full shadow-lg self-center sm:self-start whitespace-nowrap ${badgeColor}`}>
                         LEVEL {apiResult.predicted_stress_level}
                     </div>
                 </div>
@@ -338,12 +338,12 @@ const App = () => {
 
 
     return (
-        <div className="min-h-screen bg-gray-100 p-4 sm:p-8 font-sans">
+        <div className="min-h-screen bg-gray-100 px-4 sm:px-8 py-6 sm:py-10 font-sans">
             <header className="text-center mb-10 pt-4">
-                <h1 className="text-5xl font-extrabold text-blue-700 tracking-tight">
+                <h1 className="text-3xl sm:text-5xl font-extrabold text-blue-700 tracking-tight">
                     Student Stress Predictor
                 </h1>
-                <p className="text-gray-600 mt-2 text-xl">
+                <p className="text-gray-600 mt-2 text-lg sm:text-xl px-4">
                     Adjust the factors below and click "Get Prediction" to analyze via the Python ML model.
                 </p>
             </header>
@@ -361,7 +361,7 @@ const App = () => {
                     <button
                         onClick={handleApiPrediction}
                         disabled={isLoading}
-                        className="px-12 py-4 text-xl font-bold rounded-full shadow-2xl shadow-blue-400/50 
+                        className="w-full max-w-xs sm:max-w-none sm:w-auto px-8 py-3 sm:px-12 sm:py-4 text-lg sm:text-xl font-bold rounded-full shadow-2xl shadow-blue-400/50 
                                    bg-blue-600 text-white hover:bg-blue-700 transition-all transform hover:scale-105 
                                    disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed flex items-center justify-center mx-auto"
                     >
@@ -383,7 +383,7 @@ const App = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
                     {Object.entries(INPUT_CONFIG).map(([key, group]) => (
                         <div key={key} className="bg-white p-6 rounded-2xl shadow-2xl border-t-8 border-blue-500/50 hover:shadow-blue-300 transition-shadow">
-                            <h2 className="text-xl font-extrabold text-gray-900 mb-6 flex items-center">
+                            <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 mb-6 flex items-center">
                                 {group.icon}
                                 <span className="ml-3">{group.title}</span>
                             </h2>
